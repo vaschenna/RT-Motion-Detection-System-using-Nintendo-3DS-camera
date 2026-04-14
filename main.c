@@ -55,7 +55,7 @@ typedef struct {
 
 static const ClassTemplate templates[CLASS_COUNT] = {
     {0},
-    // HAND — calibrated
+    // HAND (calibrated)
     {
         .r={0.00f,0.03f,0.31f,0.21f,0.25f,0.20f,0.00f,0.00f},
         .g={0.00f,0.26f,0.27f,0.03f,0.17f,0.26f,0.00f,0.00f},
@@ -65,7 +65,7 @@ static const ClassTemplate templates[CLASS_COUNT] = {
         .colorDomMin=0.0f,.colorDomMax=0.8f,
         .colorWeight=0.5f
     },
-    // FIST — calibrated
+    // FIST (calibrated)
     {
         .r={0.05f,0.25f,0.32f,0.10f,0.05f,0.16f,0.06f,0.00f},
         .g={0.11f,0.43f,0.16f,0.03f,0.04f,0.18f,0.05f,0.00f},
@@ -107,11 +107,9 @@ static const ClassTemplate templates[CLASS_COUNT] = {
     },
 };
 
-// =============================================
 // PIXEL FONT — 5x7 characters
 // Each char: 5 columns, each column is 7 bits
 // Chars available: A-Z and space
-// =============================================
 
 // 5 wide x 7 tall, stored as 5 bytes (one per column, bit0=top)
 static const u8 pixFont[27][5] = {
@@ -179,7 +177,7 @@ static void drawChar(u16* fb, int fw, int fh,
     int idx;
     if (c >= 'A' && c <= 'Z') idx = c - 'A';
     else if (c >= 'a' && c <= 'z') idx = c - 'a';
-    else idx = 26; // space
+    else idx = 26;
 
     for (int col5 = 0; col5 < 5; col5++) {
         u8 colBits = pixFont[idx][col5];
@@ -209,19 +207,19 @@ static void drawString(u16* fb, int fw, int fh,
     }
 }
 
-// Draw class badge — colored bar top-left with label
+// Draw class badge: colored bar top-left with label
 static void drawClassBadge(u16* fb, int classId,
                             bool motionDetected) {
     u16 bgCol  = classColors[classId];
     u16 txtCol = 0x0000; // black text on colored bg
 
-    // Special case: unknown — dark bg, white text
+    // Special case: unknown (dark bg, white text)
     if (classId == CLASS_UNKNOWN) {
         bgCol  = 0x4208; // dark gray
         txtCol = 0xFFFF;
     }
 
-    // Badge background — top left, 120px wide x 20px tall
+    // Badge background: top left, 120px wide x 20px tall
     int badgeW = 130;
     int badgeH = 20;
 
